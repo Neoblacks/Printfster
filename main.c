@@ -299,7 +299,8 @@ static void random_test_i(int fd1, int fd2)
 	srand(time(NULL));
 	const char	*test_name = "rand_test 1: ";
 	const char	*str = "%d";
-	const int nb = rand() % (INT_MAX - INT_MIN) + INT_MIN;
+	const int	nb = rand() % (2147483647 - (-2147483648) + 1) + (-2147483648);
+
 
 	ft_printf(test_name);
 	ft_printf(str, nb);
@@ -326,6 +327,7 @@ void integer_test(int fd1, int fd2)
 	test_4_i(fd1, fd2);
 	test_5_i(fd1, fd2);
 	test_6_i(fd1, fd2);
+	random_test_i(fd1, fd2);
 }
 
 
@@ -424,6 +426,22 @@ static void test_6_u(int fd1, int fd2)
 	dprintf(fd1, "\n");
 }
 
+static void random_test_u(int fd1, int fd2)
+{
+	srand(time(NULL));
+	const char	*test_name = "rand_test 1: ";
+	const char	*str = "%u";
+	const int nb = rand() % UINT_MAX;
+
+	ft_printf(test_name);
+	ft_printf(str, nb);
+	ft_printf("\n");
+
+	dprintf(fd1, test_name);
+	dprintf(fd1, str, nb);
+	dprintf(fd1, "\n");
+}
+
 
 void unsigned_integer_test(int fd1, int fd2)
 {
@@ -440,6 +458,7 @@ void unsigned_integer_test(int fd1, int fd2)
 	test_4_u(fd1, fd2);
 	test_5_u(fd1, fd2);
 	test_6_u(fd1, fd2);
+	random_test_u(fd1, fd2);
 }
 
 //POINTER
@@ -489,6 +508,22 @@ static void	test_3_p(int fd1, int fd2)
 	ft_printf("\n");
 }
 
+static void random_test_p(int fd1, int fd2)
+{
+	srand(time(NULL));
+	const char	*test_name = "rand_test 1: ";
+	const char	*str = "%p";
+	const unsigned long nb = rand() % ULLONG_MAX;
+
+	ft_printf(test_name);
+	ft_printf(str, nb);
+	ft_printf("\n");
+
+	dprintf(fd1, test_name);
+	dprintf(fd1, str, nb);
+	dprintf(fd1, "\n");
+}
+
 
 void pointer_test(int fd1, fd2)
 {
@@ -502,6 +537,7 @@ void pointer_test(int fd1, fd2)
 	test_1_p(fd1, fd2);
 	test_2_p(fd1, fd2);
 	test_3_p(fd1, fd2);
+	random_test_p(fd1, fd2);
 }
 
 //STRING TEST
@@ -629,6 +665,33 @@ static void test_8_s(int fd1, int fd2)
 	dprintf(fd1, "\n");
 }
 
+//Make a random string with a random length between 0 and 50 and print it with ft_printf and printf
+static void random_test_s(int fd1, int fd2)
+{
+	srand(time(NULL));
+	const char	*test_name = "rand_test 1: ";
+	const char	*str = "%s";
+	const int len = rand() % 25;
+	char *str2 = malloc(sizeof(char) * len + 1);
+	int i = 0;
+
+	while (i < len)
+	{
+		str2[i] = rand() % (127 - 32) + 32;
+		i++;
+	}
+	str2[i] = '\0';
+
+	ft_printf(test_name);
+	ft_printf(str, str2);
+	ft_printf("\n");
+
+	dprintf(fd1, test_name);
+	dprintf(fd1, str, str2);
+	dprintf(fd1, "\n");
+}
+
+
 void string_test(int fd1, int fd2)
 {
 	char	*w_test = "\nSTRING TEST\n";
@@ -646,6 +709,7 @@ void string_test(int fd1, int fd2)
 	test_6_s(fd1, fd2);
 	test_7_s(fd1, fd2);
 	test_8_s(fd1, fd2);
+	random_test_s(fd1, fd2);
 }
 
 //TEST HEXA MIN
@@ -787,6 +851,22 @@ static void test_9_x(int fd1, int fd2)
 	dprintf(fd1, "\n");
 }
 
+static void random_test_x(int fd1, int fd2)
+{
+	const char	*test_name = " Rand_test 1 : ";
+	const char	*str = "%x";
+	const int	nb = rand() % (2147483647 - (-2147483648) + 1) + (-2147483648);
+
+	ft_printf(test_name);
+	ft_printf(str, nb);
+	ft_printf("\n");
+
+	dprintf(fd1, test_name);
+	dprintf(fd1, str, nb);
+	dprintf(fd1, "\n");
+}
+
+
 //TESTS HEXA MAJ
 
 void hexa_test(int fd1, int fd2)
@@ -807,6 +887,7 @@ void hexa_test(int fd1, int fd2)
 	test_7_x(fd1, fd2);
 	test_8_x(fd1, fd2);
 	test_9_x(fd1, fd2);
+	random_test_x(fd1, fd2);
 }
 
 static void test_1_X(int fd1, int fd2)
@@ -946,6 +1027,22 @@ static void test_9_X(int fd1, int fd2)
 	dprintf(fd1, "\n");
 }
 
+static void random_test_X(int fd1, int fd2)
+{
+	const char	*test_name = " Rand_test 1 : ";
+	const char	*str = "%x";
+	//Random between INT_MIN and INT_MAX
+	const int	nb = rand() % (2147483647 - (-2147483648) + 1) + (-2147483648);
+
+	ft_printf(test_name);
+	ft_printf(str, nb);
+	ft_printf("\n");
+
+	dprintf(fd1, test_name);
+	dprintf(fd1, str, nb);
+	dprintf(fd1, "\n");
+}
+
 void hexa_test_upper(int fd1, int fd2)
 {
 	char	*w_test = "\nHEXA Upper TEST\n";
@@ -964,6 +1061,7 @@ void hexa_test_upper(int fd1, int fd2)
 	test_7_X(fd1, fd2);
 	test_8_X(fd1, fd2);
 	test_9_X(fd1, fd2);
+	random_test_X(fd1, fd2);
 }
 
 int main(void)

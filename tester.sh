@@ -1,13 +1,6 @@
 #!/bin/bash
 
-#make a variable named padding and set it to "%-35s %-35s"
-#declare a variable named padding and set it to "%-35s %-35s"
 padding="%-35s %-35s"
-
-#use padding to print the following:
-# "Name" "Age"
-printf "$padding \n" "Name" "Age"
-# padding = "%-35s %-35s"
 
 if [[ $1 == "-h" || $1 == "--help" ]]; then
 	echo "Options:"
@@ -27,22 +20,20 @@ elif [[ $1 == "-m" || $1 == "--mandatory" || $1 == "" ]]; then
 		make
 		clear
 	fi
-	#compile the program
 
+	#compile the program
 	cc -w main.c libftprintf.a -Wall -Wextra -Werror
 
 	#Check if the program compiled correctly
 	if [ $? -eq 0 ]; then
-		rm my_input.txt
-		touch my_input.txt
 
-		#execute norminette on all files in the directory and don't print the output
+		#execute norminette on all files in the directory
 		norminette srcs/ includes/| grep Error >norminette_error.txt
-		#Write header ascii art to file and print it
+		#Write header ascii art
 		cat ascii_art.txt
 		echo ""
 		echo ""
-		./a.out >test_input.txt
+		./a.out >my_output.txt
 
 		printf "%-35s %-35s" "TEST" "MY OUTPUT"
 		echo ""
@@ -61,23 +52,24 @@ INT TEST" ] || [ "$line1" = "HEXA Lower TEST" ] || [ "$line1" = "HEXA Upper TEST
 				printf "$padding\e[31mKO\e[0m\n" "$line1" "$line2"
 				sleep 0.02
 			fi
-
-		done <output.txt 3<test_input.txt
+		#Diff between my_output.txt and output.txt
+		done <output.txt 3<my_output.txt
 		echo ""
 		#if norminette_error.txt is empty, then there are no errors and execute the program
 		if [ ! -s norminette_error.txt ]; then
+			#ok on green
 			printf "$padding\e[32mOK\e[0m \n" "Norminette:" ""
 			echo ""
 		else
-			#write norminette in green and print ko in red
+			#Ko on red
 			printf "$padding\e[31mKO\e[0m \n" "Norminette:" ""
 			echo ""
 		fi
 	else #if the program didn't compile correctly
-		echo -e "\e[31mCompilation error\e[0m"
+		echo -e "\e[31mCompilation error\e[0m Please type make to check the error"
 	fi
 elif [[ $1 == "-c" || $1 == "--check" ]]; then
-	norminette | grep Error >norminette_error.txt
+	norminette srcs/ includes/ | grep Error >norminette_error.txt
 	#if norminette_error.txt is empty, then there are no errors and execute the program
 	if [ ! -s norminette_error.txt ]; then
 		#write norminette OK on green
@@ -91,3 +83,6 @@ else
 
 	echo "Error: option doesn't exist"
 fi
+#make fclean silently
+make fclean > /dev/null
+rm -f a.out my_output.txt output.txt norminette_error.txt
