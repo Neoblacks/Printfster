@@ -15,6 +15,8 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <fcntl.h>
+#include <limits.h>
+#include <math.h>
 
 // main function to test the ft_printf function
 
@@ -159,6 +161,24 @@ static void	test_9(int fd1, int fd2)
 	dprintf(fd1, "\n");
 }
 
+static void random_test_c(int fd1, int fd2)
+{
+	srand(time(NULL));
+	const char	*test_name = "rand_test 1: ";
+	//Random char without 0 - 37
+	const char	*str = "%c";
+	const char character = rand() % (127 - 32) + 32;
+
+
+	ft_printf(test_name);
+	ft_printf(str, character);
+	ft_printf("\n");
+
+	dprintf(fd1, test_name);
+	dprintf(fd1, str, character);
+	dprintf(fd1, "\n");
+}
+
 void character_test(int fd1, int fd2)
 {
 	char	*w_test = "CHAR TEST\n";
@@ -176,6 +196,7 @@ void character_test(int fd1, int fd2)
 	test_7(fd1, fd2);
 	test_8(fd1, fd2);
 	test_9(fd1, fd2);
+	random_test_c(fd1, fd2);
 }
 
 //INTEGER
@@ -272,6 +293,23 @@ static void test_6_i(int fd1, int fd2)
 	dprintf(fd1, str, nb);
 	dprintf(fd1, "\n");
 }
+
+static void random_test_i(int fd1, int fd2)
+{
+	srand(time(NULL));
+	const char	*test_name = "rand_test 1: ";
+	const char	*str = "%d";
+	const int nb = rand() % (INT_MAX - INT_MIN) + INT_MIN;
+
+	ft_printf(test_name);
+	ft_printf(str, nb);
+	ft_printf("\n");
+
+	dprintf(fd1, test_name);
+	dprintf(fd1, str, nb);
+	dprintf(fd1, "\n");
+}
+
 
 void integer_test(int fd1, int fd2)
 {
