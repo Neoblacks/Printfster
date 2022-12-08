@@ -42,7 +42,7 @@ elif [[ $1 == "-m" || $1 == "--mandatory" || $1 == "" ]]; then
 			if [ "$line1" = "$line2" ]; then
 				#Skip CHAR TEST, STRING TEST, POINTER TEST, ADDRESS TEST, INT TEST, UNSIGNED INT TEST, HEXADECIMAL TEST, NULL line and print it in green
 				if [ "$line1" = "CHAR TEST" ] || [ "$line1" = "STRING TEST" ] || [ "$line1" = "POINTER TEST" ] || [ "$line1" = "ADDRESS TEST" ] || [ "$line1" = "INT TEST" ] || [ "$line1" = "UNSIGNED
-INT TEST" ] || [ "$line1" = "HEXA Lower TEST" ] || [ "$line1" = "HEXA Upper TEST" ] || [ "$line1" = "-----------" ] || [ "$line1" = "" ]; then
+INT TEST" ] || [ "$line1" = "HEXA Lower TEST" ] || [ "$line1" = "HEXA Upper TEST" ] || [ "$line1" = "-----------" ] || [ "$line1" = "" ] || [ "$line1" = "U_INT TEST" ]; then
 					printf "$padding\n" "$line1" "$line2"
 				else
 					printf "$padding\e[32mOK\e[0m\n" "$line1" "$line2"
