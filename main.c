@@ -6,7 +6,7 @@
 /*   By: amugnier <amugnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/28 15:40:24 by amugnier          #+#    #+#             */
-/*   Updated: 2022/12/03 15:17:16 by amugnier         ###   ########.fr       */
+/*   Updated: 2022/12/09 19:52:57 by amugnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -1064,6 +1064,69 @@ void hexa_test_upper(int fd1, int fd2)
 	random_test_X(fd1, fd2);
 }
 
+void test_mix(int fd1, int fd2)
+{
+	const char	*test_name = "test mix : ";
+	const char	*str = "%d %i %u %x %X %c %s %% %";
+	const int	nb = 42;
+	const int	nb_i = 0;
+	const int	nb_u = 87;
+	const int	nb_x = 12;
+	const int	nb_X = 16;
+	const char	c = 'a';
+	const char	*str2 = "Hello!";
+
+	ft_printf(test_name);
+	ft_printf(str, nb, nb_i, nb_u, nb_x, nb_X, c, str2);
+	ft_printf("\n");
+
+	dprintf(fd1, test_name);
+	dprintf(fd1, str, nb, nb_i, nb_u, nb_x, nb_X, c, str2);
+	dprintf(fd1, "\n");
+}
+
+
+void mix_test(int fd1, int fd2)
+{
+	char	*w_test = "\nMIX TEST\n";
+	char	*sep = "-----------\n";
+	ft_printf(w_test);
+	dprintf(fd1, w_test);
+	ft_printf(sep);
+	dprintf(fd1, sep);
+
+	test_mix(fd1, fd2);
+	// test_value1(fd1, fd2);
+}
+
+void test_value1(int fd1, int fd2)
+{
+	const char *test_name = "test1 : ";
+	const char *str = "Hello 42 World !";
+
+	ft_printf(test_name);
+	//return value
+	ft_printf(" (%d)", ft_printf(str));
+	ft_printf("\n");
+
+	dprintf(fd1, test_name);
+	dprintf(fd1, " (%d)", dprintf(fd1, str));
+	dprintf(fd1, "\n");
+
+}
+
+void value_return_test(int fd1, int fd2)
+{
+	char	*w_test = "\nVALUE RETURN TEST\n";
+	char	*sep = "-----------\n";
+	ft_printf(w_test);
+	dprintf(fd1, w_test);
+	ft_printf(sep);
+	dprintf(fd1, sep);
+
+	test_value1(fd1, fd2);
+}
+
 int main(void)
 {
 	int fd1;
@@ -1079,4 +1142,6 @@ int main(void)
 	string_test(fd1, fd2);
 	hexa_test(fd1, fd2);
 	hexa_test_upper(fd1, fd2);
+	mix_test(fd1, fd2);
+	value_return_test(fd1, fd2);
 }
