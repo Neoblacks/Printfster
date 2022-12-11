@@ -30,7 +30,7 @@ elif [[ $1 == "-m" || $1 == "--mandatory" || $1 == "" ]]; then
 		#execute norminette on all files in the directory
 		norminette srcs/ includes/| grep Error >norminette_error.txt
 		#Write header ascii art
-		cat ascii_art.txt
+		cat assets/ascii_art.txt
 		echo ""
 		echo ""
 		./a.out >my_output.txt
