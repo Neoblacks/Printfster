@@ -6,7 +6,7 @@
 /*   By: amugnier <amugnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/28 15:40:24 by amugnier          #+#    #+#             */
-/*   Updated: 2022/12/09 19:52:57 by amugnier         ###   ########.fr       */
+/*   Updated: 2022/12/12 14:09:21 by amugnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -1064,7 +1064,7 @@ void hexa_test_upper(int fd1, int fd2)
 	random_test_X(fd1, fd2);
 }
 
-void test_mix(int fd1, int fd2)
+void test_mix1(int fd1, int fd2)
 {
 	const char	*test_name = "test mix : ";
 	const char	*str = "%d %i %u %x %X %c %s %% %";
@@ -1085,6 +1085,27 @@ void test_mix(int fd1, int fd2)
 	dprintf(fd1, "\n");
 }
 
+void test_mix2(int fd1, int fd2)
+{
+	const char	*test_name = "test mix : ";
+	const char	*str = "%d %i %u %x %X %c %s %% %";
+	const int	nb = 0;
+	const int	nb_i = INT_MIN;
+	const int	nb_u = UINT_MAX;
+	const int	nb_x = INT_MAX;
+	const int	nb_X = INT_MIN;
+	const char	c = '"';
+	const char	*str2 = "";
+
+	ft_printf(test_name);
+	ft_printf(str, nb, nb_i, nb_u, nb_x, nb_X, c, str2);
+	ft_printf("\n");
+
+	dprintf(fd1, test_name);
+	dprintf(fd1, str, nb, nb_i, nb_u, nb_x, nb_X, c, str2);
+	dprintf(fd1, "\n");
+}
+
 
 void mix_test(int fd1, int fd2)
 {
@@ -1095,7 +1116,8 @@ void mix_test(int fd1, int fd2)
 	ft_printf(sep);
 	dprintf(fd1, sep);
 
-	test_mix(fd1, fd2);
+	test_mix1(fd1, fd2);
+	test_mix2(fd1, fd2);
 	// test_value1(fd1, fd2);
 }
 
@@ -1103,6 +1125,22 @@ void test_value1(int fd1, int fd2)
 {
 	const char *test_name = "test1 : ";
 	const char *str = "Hello 42 World !";
+
+	ft_printf(test_name);
+	//return value
+	ft_printf(" (%d)", ft_printf(str));
+	ft_printf("\n");
+
+	dprintf(fd1, test_name);
+	dprintf(fd1, " (%d)", dprintf(fd1, str));
+	dprintf(fd1, "\n");
+
+}
+
+void test_value2(int fd1, int fd2)
+{
+	const char *test_name = "test2 : ";
+	const char *str = "";
 
 	ft_printf(test_name);
 	//return value
@@ -1125,6 +1163,7 @@ void value_return_test(int fd1, int fd2)
 	dprintf(fd1, sep);
 
 	test_value1(fd1, fd2);
+	test_value2(fd1, fd2);
 }
 
 int main(void)
